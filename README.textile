@@ -81,7 +81,9 @@ If Hoptoad:HopToadServerURL is not specified, it will default to the current Hop
 
 VerboseMethods was added to differentiate between method overloads. This is completely optional, but it will give you a better understanding of the backtrace flow.
 
+h2. Bug Tracking
 
+Bug Tracking will be done at "http://neosonic.lighthouseapp.com/projects/56052-redhopsharp/overview":http://neosonic.lighthouseapp.com/projects/56052-redhopsharp/overview
 
 h2. TODO
 
@@ -94,3 +96,13 @@ I will add the ability to add specify custom information for end users to add to
 Further decoding of the RedMine / HopToad response. i.e. If UseRedMine = false , process HopToad XML -> error message or otherwise.
 
 XML / Inline documentation. There wasn't a lot to start with, and I have so far only compounded the problem :p
+
+h2. Authors
+
+Andy Bailey (neosonic@gmail.com)
+
+h3. Branched from work by:
+
+Hristo Deshev (hristo@deshev.com)
+Ken Robertson (ken@invalidlogic.com) 
+
