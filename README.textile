@@ -16,7 +16,7 @@ HopToad
 
 RedMine
 
-  <pre>   <appSettings>   
+<pre>   <appSettings>
   <add key="Hoptoad:ApiKey" value="HOPTOAD API KEY"/>
   <add key="Hoptoad:Environment" value="Production" />
   <add key="Hoptoad:HopToadServerURL" value ="http://redmine.local/notifier_api/v2/notices"/>
@@ -27,7 +27,7 @@ RedMine
   <add key="Hoptoad:RedMineCategory" value="Functionality"/>
   <add key="Hoptoad:RedMineProject" value="testproject"/>
   <add key="Hoptoad:RedMinePriority" value="5"/>
-  </appSettings></pre>
+</appSettings></pre>
 
 To programmatically report exceptions, all you need to do is ensure you've included the "RedHopSharp" namespace, and then call the SendToHoptoad method on the exception.  This is done using extension methods.  For example:
 For Standalone apps
