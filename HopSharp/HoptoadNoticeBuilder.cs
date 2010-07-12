@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using RedHopSharp.Serialization;
 
+
 namespace RedHopSharp
 {
 	public class HoptoadNoticeBuilder
@@ -167,13 +168,20 @@ namespace RedHopSharp
                     var method = frame.GetMethod();
 
                     var lineNumber = frame.GetFileLineNumber();
+                    
                     if (lineNumber == 0)
                         lineNumber = frame.GetILOffset();
 
                     var file = frame.GetFileName();
+
                     if (string.IsNullOrEmpty(file))
                         file = method.ReflectedType.FullName;
-
+                    else
+                        if (file.Contains("\\") && HttpContext.Current != null)
+                            if (HttpContext.Current.Request != null )
+                                 file =   "/" + file.Replace(HttpContext.Current.Request.PhysicalApplicationPath, "");
+                    file = file.Replace("\\", "/");
+                    
                     var methodString = "";
 
                     if (this.Configuration.VerboseMethods)
