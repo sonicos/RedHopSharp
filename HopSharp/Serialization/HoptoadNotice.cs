@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Web.SessionState;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 
-namespace HopSharp.Serialization
+namespace RedHopSharp.Serialization
 {
 	[XmlRoot("notice", Namespace = "")]
 	public class HoptoadNotice
@@ -13,7 +13,7 @@ namespace HopSharp.Serialization
 		{
 			this.Version = "2.0";	
 		}
-
+        
 		[XmlElement("api-key")]
 		public string ApiKey { get; set; }
 
@@ -26,6 +26,13 @@ namespace HopSharp.Serialization
 			get;
 			set;
 		}
+
+        [XmlElement("request")]
+        public HoptoadRequest Request
+        {
+            get;
+            set;
+        }
 
 		[XmlElement("notifier")]
 		public HoptoadNotifier Notifier

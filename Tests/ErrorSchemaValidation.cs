@@ -1,5 +1,5 @@
-using HopSharp;
-using HopSharp.Serialization;
+using RedHopSharp;
+using RedHopSharp.Serialization;
 using NUnit.Framework;
 
 namespace Tests

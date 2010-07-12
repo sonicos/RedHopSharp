@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace HopSharp.Serialization
+namespace RedHopSharp.Serialization
 {
 	[XmlRoot("line")]
 	public class TraceLine

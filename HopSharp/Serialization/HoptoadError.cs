@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace HopSharp.Serialization
+namespace RedHopSharp.Serialization
 {
 	[XmlInclude(typeof(TraceLine))]
 	public class HoptoadError

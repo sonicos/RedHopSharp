@@ -1,19 +1,34 @@
-h1. HopSharp
+h1. RedHopSharp
 
-HopSharp is a .NET library for use with the "Hoptoad":http://www.hoptoadapp.com exception reporting service by "Thoughtbot":http://www.thoughtbot.com.  Hoptoad allows you to easily track and get notification about exceptions that occur on your site.
+RedHopSharp is a .NET library for use with the "Hoptoad":http://www.hoptoadapp.com exception reporting service by "Thoughtbot":http://www.thoughtbot.com +as well as Redmine with "This":http://github.com/edavis10/redmine_hoptoad_server Plugin.+ Hoptoad allows you to easily track and get notification about exceptions that occur on your site.
 
-The HopSharp library can be used in two forms.  First, you can either programmatically report exceptions, if you have a try/catch block and want to ensure a particular exception is reported.  And the second is through the use of an HttpModule, which will catch any unhandled exceptions on your site and report them.
+The RedHopSharp library can be used in three forms.  First, you can either programmatically report exceptions, if you have a try/catch block and want to ensure a particular exception is reported.  The second is through the use of an HttpModule, which will catch any unhandled exceptions on your site and report them. The third is using a global.asax error handling method.
 
 h2. Usage
 
-To use the library, you'll need to build the project and drop the HopSharp.dll and the Newtonsoft.Json.dll in your site's bin directory.  To configure the library, you'll need to edit your web.config to include your API key for HopToad:
+To use the library, you'll need to build the project and drop the RedHopSharp.dll -and the Newtonsoft.Json.dll- in your site's bin directory.  To configure the library, you'll need to edit your web.config to include your API key for HopToad, or your settings for RedMine:
 
+HopToad
 <pre>  <appSettings>
     <add key="Hoptoad:ApiKey" value="1234567890abcdefg"/>
   </appSettings></pre>
 
-To programmatically report exceptions, all you need to do is ensure you've included the "HopSharp" namespace, and then call the SendToHoptoad method on the exception.  This is done using extension methods.  For example:
+RedMine
+  <pre>   <appSettings>   
+  <add key="Hoptoad:ApiKey" value="HOPTOAD API KEY"/>
+  <add key="Hoptoad:Environment" value="Production" />
+  <add key="Hoptoad:HopToadServerURL" value ="http://redmine.local/notifier_api/v2/notices"/>
+  <add key="Hoptoad:VerboseMethods" value ="true"/>
+  <add key="Hoptoad:RedMineActive" value="true"/>
+  <add key="Hoptoad:RedmineAPIKey" value="redmineAPIKey"/>
+  <add key="Hoptoad:RedmineTracker" value="Bug"/>
+  <add key="Hoptoad:RedMineCategory" value="Functionality"/>
+  <add key="Hoptoad:RedMineProject" value="testproject"/>
+  <add key="Hoptoad:RedMinePriority" value="5"/>
+  </appSettings></pre>
 
+To programmatically report exceptions, all you need to do is ensure you've included the "RedHopSharp" namespace, and then call the SendToHoptoad method on the exception.  This is done using extension methods.  For example:
+For Standalone apps
 <pre>  using HopSharp;
   ...
   try {
@@ -24,14 +39,56 @@ To programmatically report exceptions, all you need to do is ensure you've inclu
 	ex.SendToHopToad();
   }</pre>
 
+  OR
+  For web apps
+  <pre>  using HopSharp;
+  ...
+  try {
+	// some code
+  }
+  catch(Exception ex) {
+	// ohhnoes
+	ex.SendToHopToad(HttpContext.Current.ApplicationInstance);
+  }</pre>
+
 To use the HttpModule, you will just need to add it as an HttpHandler within your web.config:
 
 <pre>  <httpModules>
-    <add name="Hoptoad" type="HopSharp.NotifierHttpModule, HopSharp"/>
+    <add name="Hoptoad" type="RedHopSharp.NotifierHttpModule, RedHopSharp"/>
   </httpModules></pre>
+
+For global.asax handling, you should do the following in global.asax:
+
+<pre> 
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            HttpApplication thisapp = HttpContext.Current.ApplicationInstance;
+            string message = new HoptoadClient().Send(thisapp.Server.GetLastError().GetBaseException(),thisapp);
+            if  ( ! message.Contains("RedHopToad Error:"))
+           Response.Redirect("Error.aspx?e=" + message);
+        }
+</pre>
+
+h2. Additional Information
+
+HoptoadClient().Send will now return a String. If an error occurs during processing, in MOST cases, the error will be returned with "RedHopToad Error:" preceeding the error message. If no errors occur, you will see the Hoptoad Server you are pushing the XML to's response. For Redmine, this will be just straight up text. For HopToad, it will be an XML formatted response.
+
+If Hoptoad:RedMineActive is false (or not defined), the Hoptoad:ApiKey value will be used. Otherwise, it will build a properly formatted XML file for Redmine using the other parameters.
+
+If Hoptoad:HopToadServerURL is not specified, it will default to the current Hoptoad servers.
+
+VerboseMethods was added to differentiate between method overloads. This is completely optional, but it will give you a better understanding of the backtrace flow.
+
+
 
 h2. TODO
 
 There are some important things to do on the HttpModule still.  Most importantly, it will be incredibly verbose on its exception handling.  In .NET, a 404 is considered an exception, so it will catch, report, and subsequently notify you of any time someone tries to access a URL that doesn't exist.
 
 To circumvent this, plan on adding the ability to set a series of patterns that you can use to exclude exceptions based on exception type, part of the message, or something along those lines.
+
+I will add the ability to add specify custom information for end users to add to CGI-vars, actions, etc. This will be achieved through passing a an array of CGI objects or whatever, which will require additional programming for the end user. I will only extend this library as much as it needs to be able to allow this.
+
+Further decoding of the RedMine / HopToad response. i.e. If UseRedMine = false , process HopToad XML -> error message or otherwise.
+
+XML / Inline documentation. There wasn't a lot to start with, and I have so far only compounded the problem :p

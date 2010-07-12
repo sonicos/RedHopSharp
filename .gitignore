@@ -9,4 +9,5 @@ _ReSharper*
 
 #project-specific
 *.log
-Hoptoad.config
+RedHoptoad.config
+app.config

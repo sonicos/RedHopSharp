@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Web;
 
-namespace HopSharp
+namespace RedHopSharp
 {
 	public static class Extension
 	{
@@ -9,5 +10,10 @@ namespace HopSharp
 			HoptoadClient client = new HoptoadClient();
 			client.Send(exception);
 		}
+        public static void SendToHoptoad(this Exception exception,  HttpApplication app )
+        {
+            HoptoadClient client = new HoptoadClient();
+            client.Send(exception, app);
+        }
 	}
 }

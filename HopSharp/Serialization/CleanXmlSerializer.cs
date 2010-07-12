@@ -1,7 +1,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace HopSharp.Serialization
+namespace RedHopSharp.Serialization
 {
 	//Wrap XML serialization and do not generate processing instructions on document start 
 	//as well as xsi and xsd namespace definitions
@@ -25,8 +25,9 @@ namespace HopSharp.Serialization
 
 			var serializer = new XmlSerializer(typeof(TRoot));
 			serializer.Serialize(xmlWriter, source, this.namespaces);
-
-			return writer.GetStringBuilder().ToString();
+           
+            var content = writer.GetStringBuilder().ToString();
+			return content;
 		}
 
 		class XmlTextWriterFormattedNoDeclaration : System.Xml.XmlTextWriter

@@ -1,0 +1,23 @@
+h1. RedHopSharp Changelog
+
+h2. 2.0.1.15 (2010-7-12) 
+
+h3. Overview
+
+Initial release of changes to HopSharp codebase. We can now integrate nicely with "This Redmine Plugin":http://github.com/edavis10/redmine_hoptoad_server
+
+h3. Features
+
+Redmine Hoptoad Server Plugin support... See above link.
+
+Verbose Methods - Option to display full methods used in backtrace.
+
+Added Request section.
+
+h3. Bugs Fixed
+
+Now displays correct file error line instead of IL Line.
+
+h3. Known Issues
+
+I need to include more documentation, and comment up the code...

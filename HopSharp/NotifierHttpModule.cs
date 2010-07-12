@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace HopSharp
+namespace RedHopSharp
 {
 	public class NotifierHttpModule : IHttpModule
 	{
@@ -14,9 +14,8 @@ namespace HopSharp
 		{
 			HttpApplication application = (HttpApplication)sender;
 			HoptoadClient client = new HoptoadClient();
-
-			Exception exception = application.Server.GetLastError();
-			client.Send(exception);
+			Exception exception = application.Server.GetLastError().GetBaseException();
+            client.Send(exception, application);
 		}
 
 		public void Dispose()  { }

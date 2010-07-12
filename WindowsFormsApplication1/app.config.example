@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<configuration>
+<startup></startup>
+  <appSettings>
+    <add key="Hoptoad:ApiKey" value="NULL"/>
+    <add key="Hoptoad:Environment" value="Production" />
+    <add key="Hoptoad:HopToadServerURL" value ="http://redmine.local/notifier_api/v2/notices"/>
+    <add key="Hoptoad:RedMineActive" value="true"/>
+    <add key="Hoptoad:RedmineAPIKey" value="testapikey"/>
+    <add key="Hoptoad:RedmineTracker" value="Bug"/>
+    <add key="Hoptoad:RedMineCategory" value="Functionality"/>
+    <add key="Hoptoad:RedMineProject" value="testproj"/> 
+    <add key="Hoptoad:RedMinePriority" value="5"/>
+  </appSettings>
+</configuration>
