@@ -9,11 +9,13 @@ h2. Usage
 To use the library, you'll need to build the project and drop the RedHopSharp.dll -and the Newtonsoft.Json.dll- in your site's bin directory.  To configure the library, you'll need to edit your web.config to include your API key for HopToad, or your settings for RedMine:
 
 HopToad
+
 <pre>  <appSettings>
     <add key="Hoptoad:ApiKey" value="1234567890abcdefg"/>
   </appSettings></pre>
 
 RedMine
+
   <pre>   <appSettings>   
   <add key="Hoptoad:ApiKey" value="HOPTOAD API KEY"/>
   <add key="Hoptoad:Environment" value="Production" />
